@@ -15,7 +15,7 @@ namespace CICD_Sample.Controllers
 
         public IActionResult Index()
         {
-            return Vizew();
+            return View();
         }
 
         public IActionResult Privacy()
