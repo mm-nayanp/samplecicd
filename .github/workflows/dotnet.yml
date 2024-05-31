@@ -6,8 +6,8 @@ name: .NET
 on:
   push:
     branches: [ "master" ]
-# pull_request:
-#    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -26,3 +26,15 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Build & Publish
+      run: dotnet restore  
+           dotnet build
+           dotnet publish -o publish
+    - name: CompressToZip
+      run: cd publish
+           zip -r ../output
+    - name: Upload ZIP
+      uses: actions/upload-artifact@v2
+      with: 
+         name: test
+         path: ./publish
