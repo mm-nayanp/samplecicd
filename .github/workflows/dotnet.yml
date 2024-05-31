@@ -27,6 +27,8 @@ jobs:
            dotnet publish -o publish 
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: List publish directory
+      run: ls -la publish
     - name: CompressToZip
       run: |
            cd publish           
@@ -35,4 +37,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with: 
          name: test
-         path: ./publish
+         path: ./output.zip
