@@ -21,13 +21,15 @@ jobs:
       with:
         dotnet-version: 7.0.x  
     - name: Build and Publish
-      run: dotnet restore  
+      run: |
+           dotnet restore  
            dotnet build
            dotnet publish -o publish 
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: CompressToZip
-      run: cd publish
+      run: |
+           cd publish
            zip -r ../output
     - name: Upload ZIP
       uses: actions/upload-artifact@v2
