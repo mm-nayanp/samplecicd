@@ -30,7 +30,7 @@ jobs:
     - name: CompressToZip
       run: |
            cd publish           
-           zip -r ../output.
+           zip -r ../output.zip
     - name: Upload ZIP
       uses: actions/upload-artifact@v2
       with: 
