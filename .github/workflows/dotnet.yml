@@ -45,4 +45,4 @@ jobs:
     - name: Copy files to restore
       run: |
            mkdir -p Restore
-           rsync -av /path/to/iis/ restore/
+           rsync -av C:\inetpub\wwwroot\BO-Stage Restore/
