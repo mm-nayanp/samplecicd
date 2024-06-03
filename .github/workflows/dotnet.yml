@@ -42,7 +42,11 @@ jobs:
       with: 
          name: test
          path: output.zip
+         
     - name: Copy files to restore
       run: |
-           mkdir -p Restore
-           rsync -av C:\inetpub\wwwroot\BO-Stage Restore/
+           if (-Not (Test-Path -Path "C:\inetpub\wwwroot\BO-Stage\Restore")) {
+             New-Item -ItemType Directory -Path "C:\inetpub\wwwroot\BO-Stage\Restore"
+           }
+           Copy-Item -Path "C:\inetpub\wwwroot\BO-Stage\Site\*" -Destination "C:\inetpub\wwwroot\BO-Stage\Restore" -Recurse -Force
+      shell: pwsh
