@@ -84,6 +84,7 @@ jobs:
            if (-Not (Test-Path -Path $restorePath)) {
                try {
                    New-Item -ItemType Directory -Path $restorePath -ErrorAction Stop
+                   Write-Output "Created Restore directory."
                } catch {
                    Write-Error "Failed to create Restore directory: $_"
                    exit 1
