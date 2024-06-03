@@ -20,15 +20,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+
+### Setup .NET ###    
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 7.0.x  
+
+        
+### Build and Publish ###
     - name: Build and Publish
       run: |
            dotnet restore  
            dotnet build --output build_output
            dotnet publish --output publish_output
+
+
+### Test the build ###
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: List publish directory
@@ -36,14 +45,19 @@ jobs:
     - name: CompressToZip
       run: |
            cd publish_output           
-           zip -r ../output.zip .
+           zip -r ../output.zip  
+
+           
+### Upload ZIP ###
     - name: Upload ZIP
       uses: actions/upload-artifact@v2
       with: 
          name: test
          path: output.zip
-         
-    - name: Copy files to restore
+
+
+### Copy files to Restore ###
+    - name: Copy files to Restore
       run: |
            if (-Not (Test-Path -Path "C:\inetpub\wwwroot\BO-Stage\Restore")) {
              New-Item -ItemType Directory -Path "C:\inetpub\wwwroot\BO-Stage\Restore"
