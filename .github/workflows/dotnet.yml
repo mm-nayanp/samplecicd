@@ -44,14 +44,16 @@ jobs:
 
 ### List publish directory ###  
     - name: List publish directory
-      run: ls -la publish_output
+      run: Get-ChildItem -Path publish_output
+      shell: pwsh
 
 
 ### Compress To Zip ###
     - name: Compress To Zip
       run: |
-           cd publish_output           
-           zip -r ../output.zip  
+           cd publish_output
+           Compress-Archive -Path . -DestinationPath ../output.zip
+      shell: pwsh
 
            
 ### Upload ZIP ###
