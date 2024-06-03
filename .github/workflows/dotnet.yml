@@ -70,13 +70,36 @@ jobs:
            $sitePath = "C:\inetpub\wwwroot\BO-Stage\Site"
            $restorePath = "C:\inetpub\wwwroot\BO-Stage\Restore"
            
-           if (-Not (Test-Path -Path $restorePath)) {
-             New-Item -ItemType Directory -Path $restorePath
+           # Check permissions
+           try {
+               $testFile = Join-Path -Path $sitePath -ChildPath "test.txt"
+               New-Item -Path $testFile -ItemType File -Force
+               Write-Output "Permissions check successful."
+           } catch {
+               Write-Error "Failed to check permissions: $_"
+               exit 1
            }
 
+           # Create Restore directory if it doesn't exist
+           if (-Not (Test-Path -Path $restorePath)) {
+               try {
+                   New-Item -ItemType Directory -Path $restorePath -ErrorAction Stop
+               } catch {
+                   Write-Error "Failed to create Restore directory: $_"
+                   exit 1
+               }
+           }
+
+           # Copy files from Site to Restore
            if (Test-Path -Path $sitePath) {
-             Copy-Item -Path $sitePath\* -Destination $restorePath -Recurse -Force
+               try {
+                   Copy-Item -Path $sitePath\* -Destination $restorePath -Recurse -Force -ErrorAction Stop
+                   Write-Output "Files copied successfully."
+               } catch {
+                   Write-Error "Failed to copy files: $_"
+                   exit 1
+               }
            } else {
-             Write-Host "Site directory not found. Skipping copy operation."
+               Write-Host "Site directory not found. Skipping copy operation."
            }
       shell: pwsh
