@@ -67,8 +67,16 @@ jobs:
 ### Copy files to Restore ###
     - name: Copy files to Restore
       run: |
-           if (-Not (Test-Path -Path "C:\inetpub\wwwroot\BO-Stage\Restore")) {
-             New-Item -ItemType Directory -Path "C:\inetpub\wwwroot\BO-Stage\Restore"
+           $sitePath = "C:\inetpub\wwwroot\BO-Stage\Site"
+           $restorePath = "C:\inetpub\wwwroot\BO-Stage\Restore"
+           
+           if (-Not (Test-Path -Path $restorePath)) {
+             New-Item -ItemType Directory -Path $restorePath
            }
-           Copy-Item -Path "C:\inetpub\wwwroot\BO-Stage\Site\*" -Destination "C:\inetpub\wwwroot\BO-Stage\Restore" -Recurse -Force
+
+           if (Test-Path -Path $sitePath) {
+             Copy-Item -Path $sitePath\* -Destination $restorePath -Recurse -Force
+           } else {
+             Write-Host "Site directory not found. Skipping copy operation."
+           }
       shell: pwsh
