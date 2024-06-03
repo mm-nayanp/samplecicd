@@ -25,10 +25,10 @@ jobs:
            dotnet restore  
            dotnet build --output build_output
            dotnet publish --output publish_output
-    #- name: Test
-    #  run: dotnet test --no-build --verbosity normal
-    #- name: List publish directory
-    #  run: ls -la publish_output
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: List publish directory
+      run: ls -la publish_output
     - name: CompressToZip
       run: |
            cd publish_output           
