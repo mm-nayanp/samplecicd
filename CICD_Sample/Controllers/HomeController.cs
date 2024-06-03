@@ -18,7 +18,7 @@ namespace CICD_Sample.Controllers
             return View();
         }
 
-        public IActionResult Privacy() 
+        public IActionResult Privacy()
         {
             return View();
         }
