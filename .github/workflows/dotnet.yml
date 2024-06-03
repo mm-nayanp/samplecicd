@@ -28,13 +28,13 @@ jobs:
     #- name: Test
     #  run: dotnet test --no-build --verbosity normal
     #- name: List publish directory
-    #  run: ls -la publish
+    #  run: ls -la publish_output
     - name: CompressToZip
       run: |
-           cd publish           
-           zip -r ../output.
+           cd publish_output           
+           zip -r ../output.zip.
     - name: Upload ZIP
       uses: actions/upload-artifact@v2
       with: 
          name: test
-         path: ./publish
+         path: output.zip
