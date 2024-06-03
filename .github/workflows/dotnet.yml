@@ -72,7 +72,7 @@ jobs:
            
            # Check permissions
            try {
-               $testFile = Join-Path -Path $sitePath -ChildPath "test.txt"
+               $testFile = Join-Path -Path $sitePath -ChildPath "testqwerty.txt"
                New-Item -Path $testFile -ItemType File -Force
                Write-Output "Permissions check successful."
            } catch {
